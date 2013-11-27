@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Name</key>
+		<string>Web Dictionary 1</string>
+		<key>ON</key>
+		<integer>1</integer>
+		<key>URL</key>
+		<string>http://dictionary.reference.com/browse/@@</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Web Dictionary 2</string>
+		<key>ON</key>
+		<integer>1</integer>
+		<key>URL</key>
+		<string>http://en.wikipedia.org/wiki/@@</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Web Dictionary 3</string>
+		<key>ON</key>
+		<integer>1</integer>
+		<key>URL</key>
+		<string>http://www.thefreedictionary.com/@@</string>
+	</dict>
+</array>
+</plist>

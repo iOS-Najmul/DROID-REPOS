@@ -1,0 +1,39 @@
+1. In een Boek Modus
+
+ 1) Zoek een paar leesbestanden
+    :het ondersteunt "txt" bestand.
+    ※Je kunt e-boeken sites zoals "www.gutenberg.org" gebruiken als je geen boeken hebt.
+    :Zet ze over met iTunes Bestanden Delen
+    :Je kunt een bestand creëren met "Make a book" in de Web Modus
+
+ 2) Kies een boekbestand van de lijst om te lezen
+
+ 3) "Analyze" het bestand in het "Prepare" menu.
+
+ Stel woorden in op  bekende of onbekende "Words in this book" van het "Dic&Info" menu.
+    Tip) Je kunt snel woorden instellen met het "Snelle instelling" menu.
+    "NR": Niet Beoordeeld
+    "X": onbekende woorden
+    "?": niet zeker
+    "!" bekende woorden
+    "-": nuttige woorden. Eigennaam...
+
+ 5) Type de betekenis van het onbekende woord met behulp van webwoordenboek
+
+ 6) Verander naar studiemodus door "study" aan te klikken van het menu rechtsboven
+
+ 7) Gewoon lezen!!!
+    :Je kunt betekenis van onbekende woorden aan of uit zetten tijdens het lezen!
+    :Als je de betekening van één woord wilt weten, beweeg de muis erover.
+
+2. Op Webmodus
+
+ 1) Ga naar de website die je wilt lezen.
+    :Type de naam van de website of gebruik "Favorites" van het menu
+
+ 2) Tijdens het lezen kun je een boek maken als je wilt.
+   (1) Kopieer de tekst die je in een boek wilt zetten
+   (2) Gebruik "Make a book" van het "Book"menu.
+   (3) Type de naam van het boek en klik op "OK".
+
+   TIP) Als deze App nieuw voor je is of als je geen lijst met bekende woorden hebt, raad ik je aan om ""Word Group" in "My Level" te gebruiken. Controleer de woorden van elke lijst en als je denkt dat je de meeste woorden op de lijst kent, zet ze dan in bekende woorden.

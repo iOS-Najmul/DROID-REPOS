@@ -1,0 +1,39 @@
+1. I ett Bokläge
+
+ 1) Hämta läsfiler
+    :Stödjer "txt" filer.
+    Du kan använda e-bokhemsidor som t ex "www.gutenberg.org" om du inte har några böcker.
+    :Överför dem med iTunes Fildelning.
+    :Du kan skapa en fil med "Make a book" i Internetläge.
+
+ 2) Välj en bokfil från listan att läsa
+
+ 3) "Analyze" filen i "Prepare"menyn.
+
+ 4) Markera ord som kända eller okända "Words in this book" från "Dic&Info"menyn.
+    Tips) Du kan snabbmarkera ord i "Snabbmarkera"menyn.
+    "NR": Inte Rangordnad
+    "X": okända ord
+    "?": osäker
+    "!": kända ord
+    "-": användbara ord. lämpligt substantiv...
+
+ 5) Skriv betydelse på det okända ordet med hjälp av Internetordboken.
+
+ 6) Välj läsläge genom att trycka "study" i menyn uppe till höger.
+
+ 7) Läs!!!
+    : Medan du läser kan du slå av och på betydelse av okända ord!
+    : Om du vill veta ordets betydelse, svep över det.
+
+2. På Internetläge
+
+ 1) Gå till hemsidan du vill läsa.
+    : Skriv hemsidans namn eller använd "Favorites" från menyn
+
+ 2) Medan du läser kan du skapa en bok om du vill.
+   (1) Kopiera text som du vill skapa en bok av.
+   (2) Välj "Make a book" från "Book"menyn.
+   (3) Skriv bokens namn och tryck "OK".
+
+   TIPS) Om det är första gången du använder den här appen eller inte har någon känd ordlista rekommenderas att använda "Word Group" i "My Level". Kontrollera varje ordlista och om du tycker att du kan de flesta orden i listan, flytta dem till listan för kända ord.

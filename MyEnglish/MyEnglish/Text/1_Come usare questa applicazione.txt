@@ -1,0 +1,39 @@
+1. Nella modalità Libro
+
+ 1) Trova dei file da leggere
+    : E' compatibile con i file "txt".
+    ※ Puoi utilizzare siti per e-book come "www.gutenberg.org" se non hai nessun libro.
+    : Trasferiscili con iTunes File Sharing.
+    : Puoi creare un file con "Make a book" nella modalità Web.
+
+ 2) Seleziona un file del libro dalla lista per leggere
+
+ 3) "Analyze" il file nel menù "Prepare"
+
+ 4) Colloca le parole conosciute e sconosciute nella sezione "Words in this book" del menù "Dic&Info" 
+    Consiglio) Puoi collocare rapidamente le parole con il menù "Quick setting"
+    "NR" : Non quotato
+    "X" : parole sconosciute
+    "?" : non sicuro
+    "!" : parole conosciute
+    "-" : parole utili. nome proprio ...
+
+ 5) Scrivi il significato della parola sconosciuta utilizzando il dizionario web
+
+ 6) Cambia nella modalità di studio premendo "study" dal menù superiore destra. 
+
+ 7) Leggi soltanto!!!
+    : Puoi attivare o disattivare la funzione "significato delle parole sconosciute" mentre leggi!
+    : Se vuoi conoscere il significato di una parola, vai sopra.
+
+2. Nella modalità Web
+
+ 1) Vai sul sito che vuoi leggere.
+    : Digita il nome del sito oppure utilizza "Favorites" dal menù
+
+ 2) Mentre stai leggendo puoi creare un libro, se lo vuoi.
+   (1) Copia il testo che vuoi trasformare in un libro.
+   (2) Utilizza "Make a book" dal menù "Book"
+   (3) Digita il titolo del libro e premi "OK"
+
+   Consiglio) Se questa applicazione è nuova per te o se non hai nessuna lista di parole conosciute, ti raccomandiamo di utilizzare "Word Group" in "My Level". Controlla ogni lista di parole e se pensi di conoscere la maggior parte delle parole della lista spostale semplicemente nelle parole conosciute.

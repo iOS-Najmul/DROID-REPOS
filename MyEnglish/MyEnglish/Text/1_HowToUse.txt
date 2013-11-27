@@ -1,0 +1,42 @@
+How to use this App.
+1. In a Book Mode
+
+ 1) Get some reading files
+    :It supports "txt" file and "ePub" file.
+    ※ You can use e-book sites such as "www.gutenberg.org" if you have no books.
+    : Transfer them with iTunes File Sharing.
+    : You can create a file with "Make a book" in Web Mode.
+
+ 2) Select a book file from the list to read
+
+ 3) "Analyze" the file in the "Prepare" menu.
+
+ 4) Set words to known or unknown  "Words in this book" from the "Dic&Info" menu.
+    Tip) You can quickly set words with the "Quick setting" menu.
+    "NR" : Not Rated
+    "X" : unknown words
+    "?" : not sure
+    "!" : known words
+    "-" : useful words. proper noun...
+
+ 5) Type meaning of the unknown word using web dicitionary.
+
+ 6) Change to study mode by pressing "study" from the menu upper right.
+
+ 7) Just Read!!!
+    : You can turn meaning of the unknown words on or off while reading!
+    : If you want to know the meaning of one word, hover on it.
+
+2. On Web Mode
+
+ 1) Go to the website you want to read.
+    : Type the website name or use "Favorites" from the menu
+
+ 2) While reading you can make a book if you wish.
+   (1) Copy text you want to make into a book.
+   (2) Use "Make a book" from the "Book" menu.
+   (3) Type book's name and press "OK".
+
+   TIP) If you are new to this App or don't have any known words list, I recommend  to use "Word Group" in "My Level". Check each list's words and if you think you know most of the words in the list just set them to known words.
+
+ Just Get It Right Now With This Book.

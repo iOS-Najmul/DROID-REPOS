@@ -1,0 +1,39 @@
+1. En Modo Libro
+
+ 1) Consigue archivos de lectura
+    :Compatibles con archivos "txt"
+    ※ Puedes utilizar páginas web de e-book como "www.gutenberg.org" si no posees ningún libro
+    : Transfierelos con iTunes File Sharing
+    : Puedes crear un archivo con "Make a book" en Modo Web
+
+ 2) Selecciona un libro de la lista
+
+ 3) "Analyze" el archivo con "Prepare" del menú
+
+ 4) Clasifica las "Words in this book" como conocidas o desconocidas en "Dic&Info" del menú
+    Consejo) Se pueden clasificar las palabras rapidamente con el menú "Quick setting"
+    "NR": Sin clasificación
+    "X": palabras desconocidas
+    "?": dudoso
+    "!": palabras conocidas
+    "-": palabras útiles, nombre propio…
+
+ 5) Escribir el significado de la palabra desconocida usando un diccionario de la web
+
+ 6) Cambiar a modo estudio presionando "study" arriba a la derecha del menú
+
+ 7) A leer!!
+    : Puedes activar o desactivar el significado de las palabras mientras lees!
+    : Si quieres saber el significado de una palabra, pon el puntero del ratón sobre la palabra
+
+2. Modo Web
+
+ 1) Ve a la página web que quieres leer
+    : Escribe el nombre de la página o usa "Favorites" del menú
+
+ 2) Mientras lees puedes crear un libro si así lo deseas
+   (1) Copia el texto que quieres que forme parte del libro
+   (2) Usa "Make a book" del menú "Book" 
+   (3) Escribe el nombre del libro y presiona "OK"
+
+   Consejo) Si acabas de conseguir esta aplicación o no tienes una lista de palabras conocidas, recomiendo que uses "Word Group" en "My Level". Mira cada lista de palabras y si crees que ya conoces la mayoría de palabras de la lista, envíalas a palabras conocidas

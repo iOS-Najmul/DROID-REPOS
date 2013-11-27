@@ -1,0 +1,560 @@
+//
+// Prefix header for all source files of the 'MyEnglish' target in the 'MyEnglish' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+
+#define     DOC_FOLDER_PATH     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)objectAtIndex:0]
+
+//com.dalnimSoft.${PRODUCT_NAME:rfc1034identifier}
+#ifdef DEBUG
+#define DLog(fmt, ...) NSLog((@"%s[Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else  
+#define DLog(...)  
+#endif
+
+#define TWITTER_CONSUMER_KEY        c4x3s1beFj7c8cmT3FHeqw
+#define TWITTER_CONSUMER_SECRET     TNcvd28PMafwcLloCGqsGIXYQSfHpICSQd3PcP5U8
+
+
+#define widthiPad 768
+#define heightiPad 1024
+#define widthiPhone 320
+#define heightiPhone 480
+#define heightiPhone5 568   //실제는 1136이다.
+#define heightStatusBar 20
+#define naviBarHeight 44
+#define tabbarHeight 49
+
+#define appWidth [myCommon getAppWidth]
+#define appHeight [myCommon getAppHeight]
+
+#define intReadTextType_Book 0
+#define intReadTextType_SmartWordList 1
+//단어의 아는 정도
+#define KnowWord_NotInDic -1
+#define KnowWord_NotRated 0
+#define KnowWord_Unknown 1
+#define KnowWord_NotSure 2
+#define KnowWord_Known 3
+#define KnowWord_Exclude 99
+
+#define KnowWord_StrNotRated @""
+#define KnowWord_StrUnknown @"X"
+#define KnowWord_StrNotSure @"?"
+#define KnowWord_StrKnown @"!"
+#define KnowWord_StrExclude @"-"
+
+//테이블 이름
+
+#define TBL_tblEngDic           @"tblEngDic"
+
+#define TBL_EngDic           @"ENG_DIC"
+#define TBL_EngDic_BookTemp             @"BookTemp"
+//#define TBL_ENV_BOOK            @"ENV_BOOK"
+#define TBL_APP_INFO            @"APP_INFO"
+#define TBL_dicByCategory       @"dicByCategory"
+#define TBL_Idiom       @"Idiom"
+#define TBL_WordHistory         @"WordHistory"
+//#define TBL_WordOrder         @"WordOrder"
+#define TBL_FullWordOrder         @"FullWordOrder"
+
+#define TBL_BOOK_INFO                 @"BOOK_INFO"      //각책에 해당되는 sqlite에 있는 테이블
+#define TBL_BOOK_LIST        @"BOOK_LIST"
+#define TBL_ChapterInfo         @"ChapterInfo"
+//#define TBL_BOOK_SETTING        @"BOOKSETTING"
+#define TBL_PageInfoTbl         @"PageInfoTbl"
+#define TBL_sqlite_master       @"sqlite_master"
+//#define TBL_BOOK_Env "Env"
+
+#define TBL_INDEX_WithoutFldName @"idx_TblEngDic_"
+#define TBL_INDEX_Count @"IDX_TBL_EngDic_Count"
+#define TBL_INDEX_Know @"IDX_TBL_EngDic_Know"
+#define TBL_INDEX_Rank @"IDX_TBL_EngDic_Rank"
+#define TBL_INDEX_Word @"IDX_TBL_EngDic_Word"
+
+
+//필드 이름
+#define FldName_AllPage                 @"AllPage"
+#define FldName_Chapter                 @"Chapter"
+#define FldName_ChapterName                 @"ChapterName"
+#define FldName_END                     @"END"
+#define FldName_Idiom                     @"Idiom"
+#define FldName_Know                    @"Know"
+#define FldName_KnowPronounce           @"KnowPronounce"
+#define FldName_Pronounce               @"Pronounce"
+#define FldName_Word                    @"Word"
+#define FldName_WORDORI                 @"WORDORI"
+#define FldName_COUNT                   @"COUNT"
+#define FldName_KnowOld              @"Know_Old"
+#define FldName_KnowNew              @"Know_New"
+#define FldName_ToMemorize              @"TOMEMORIZE"
+#define FldName_Meaning                 @"MEANING"
+#define FldName_DESC                    @"DESC"
+#define FldName_USE                     @"USE"
+#define FldName_WORDLEVEL1                   @"WORDLEVEL1"
+#define FldName_FIELDNAME               @"FIELDNAME"
+#define FldName_CATEGORYNAME            @"CATEGORYNAME"
+#define FldName_TYPE                    @"TYPE"
+#define FldName_NAME                    @"NAME"
+#define FldName_LASTPAGE                @"LASTPAGE"
+#define FldName_FONT                    @"FONT"
+#define FldName_BACKLIGHT               @"BACKLIGHT"
+#define FldName_FILENAME                @"FILENAME"
+#define FldName_SHOWMEANING                @"SHOWMEANING"
+#define FldName_START               @"START"
+
+#define FldName_WORDLEVEL1                @"WORDLEVEL1"
+#define FldName_WORDLEVEL2                @"WORDLEVEL2"
+#define FldName_WORDLEVEL3                @"WORDLEVEL3"
+#define FldName_WORDORDER                @"WORDORDER"
+#define FldName_OFFSET                @"Offset"
+
+
+//0 : 사용자가 추가한 단어                       1 : 기본으로 깔린 단어(지우지 못하게 할려고)
+//English앱에서만 2 : phrasal verb라고 생각해서 추가한것          3 : phrasal verb라고 추가 더 많이 한것
+#define FldName_InstalledWord           @"InstalledWord"
+#define FldName_WordLength              @"RESERV1_INT"                  //ENGLISH, CHINESE 모드에서는 단어의 문자수르 나타낸다.
+#define FldName_FirstWord               @"RESERV1_CHAR"                 ////HD.KIM 2013 May 3 : Field Name. if field word has more than one word the field shows the first word in the "word" field. 단어의 첫번째 단어를 표시한다.(빨리 찾을려구...)
+
+#define FldName_HanjaKoreanMeaning      @"RESERV2_CHAR"                 //CHINESE 모드에서는 한자 단어에 대한 한글발음이 들어있다.
+#define FldName_WordGroup              @"RESERV3_CHAR"                  //단어 그룹별(동물, 신체, 학교등... 단어 그룹) WordGroup의 ID필드값이 사용된다. (ID 번호가 RESERV3_CHAR에 있어야 한다. "_"를 앞뒤로 붙힌다. 예.. _1_ )
+
+
+#define FldName_PageInfoTbl_PAGE   @"PAGE"
+#define FldName_PageInfoTbl_START   @"START"
+#define FldName_PageInfoTbl_END   @"END"
+
+#define FldName_BOOK_LIST_FILENAME   @"FILENAME"
+#define FldName_BOOK_LIST_ID   @"ID"
+#define FldName_BOOK_LIST_WORD_COUNT_ALL   @"WORD_COUNT_ALL"
+#define FldName_BOOK_LIST_WORD_COUNT_UNKNOWN   @"WORD_COUNT_UNKNOWN"
+#define FldName_BOOK_LIST_WORD_COUNT_NOTSURE   @"WORD_COUNT_NOTSURE"
+#define FldName_BOOK_LIST_WORD_COUNT_KNOWN   @"WORD_COUNT_KNOWN"
+#define FldName_BOOK_LIST_WORD_COUNT_EXCLUDE   @"WORD_COUNT_EXCLUDE"     //임시로 사전에 없는 단어를 저장할때 사용한다.
+#define FldName_BOOK_LIST_BookLength   @"BookLength"     
+#define FldName_BOOK_LIST_WORD_COUNT_UNIQUE   @"WORD_COUNT_UNIQUE"
+
+//Sqlite의 버전
+//English에서 Ver1.2에서는 단어뿐만아니고 숙어 문장도 추가되어 있다.
+#define FldName_ENV_Version     @"VERSION"
+
+#define FldName_WordHistory_Word    @"WORD"
+#define FldName_WordHistory_KnowBefore    @"KnowBefore"
+#define FldName_WordHistory_Know    @"Know"
+#define FldName_WordHistory_ChangeTime    @"ChangeTime"
+
+#define FldName_TBL_EngDic_MEANING         @"MEANING"
+#define FldName_TBL_EngDic_WORD @"WORD"
+#define FldName_TBL_EngDic_WORDORI @"WORDORI"
+//#define FldName_TBL_EngDic_RANK @"RANK"
+#define FldName_TBL_EngDic_LEVEL @"WORDLEVEL1"
+#define FldName_TBL_EngDic_COUNT @"COUNT"
+#define FldName_TBL_EngDic_KNOW @"KNOW"
+#define FldName_TBL_EngDic_DESC @"DESC"
+
+//#define FldName_BOOK_MEANING         @"MEANING"
+//#define FldName_BOOK_WORD @"WORD"
+//#define FldName_BOOK_WORDORI @"WORDORI"
+//#define FldName_BOOK_WORDORDER @"WORDORDER"
+//#define FldName_BOOK_LEVEL @"LEVEL"
+//#define FldName_BOOK_COUNT @"COUNT"
+//#define FldName_BOOK_KNOW @"KNOW"
+
+
+//#define TBL_BOOK_PageInfoTbl "PageInfoTbl"
+
+#define DicListType_TBL_EngDic 1
+#define DicListType_TBL_EngDicEachBook 2
+#define DicListType_TBL_EngDicBookTemp 3
+#define DicListType_TBL_EngDicUserLevel 4
+#define DicListType_TBL_EngDicWordGroup 5
+#define DicListType_TBL_EngDicUserDic 6
+
+#define DicWordOrIdiom_Word 0
+#define DicWordOrIdiom_Idiom 1
+#define DicWordOrIdiom_PhrasalVerb 2
+#define DicWordOrIdiom_Proverb 3
+#define DicWordOrIdiom_FamousSentence 4
+#define DicWordOrIdiom_Sentence 5
+
+#define getAllWordsSQLTypeNormal 1
+#define getAllWordsSQLTypeUserLevel 2
+#define getAllWordsSQLTypeWordGroup 3
+#define getAllWordsSQLTypeUserDic 4
+
+#define intSortType_Alphabet 0
+#define intSortType_Frequency 1
+#define intSortType_Searched 2
+#define intSortType_MeaningNeeded 3
+#define intSortType_AppearanceOrder 4
+#define intSortType_WordGroup 5
+
+#define intFlashCardType_FlashCard 1
+#define intFlashCardType_QA 2
+#define intFlashCardType_TestLevel 3
+
+#define kPageDivide 100
+#define sentenceMax 512
+
+
+
+
+#define TBL_TYPE_TBL_EngDic 1
+#define TBL_TYPE_TBL_EngDicEachBook 2
+
+
+#define FLD_NO_APP_INFO_Version 0
+#define FLD_NO_APP_INFO_BackLight 1
+#define FLD_NO_APP_INFO_FldName_SHOWMEANING 2
+#define FLD_NO_APP_INFO_Difficulty_VeryEasy 3
+#define FLD_NO_APP_INFO_Difficulty_Easy 4
+#define FLD_NO_APP_INFO_Difficulty_Good 5
+#define FLD_NO_APP_INFO_Difficulty_Hard 6
+
+#define FLD_NO_ChapterInfoTbl_CHAPTER 0
+#define FLD_NO_ChapterInfoTbl_CHAPTER_NAME 1
+#define FLD_NO_ChapterInfoTbl_START 2
+#define FLD_NO_ChapterInfoTbl_END 3
+
+
+#define FLD_NO_PageInfoTbl_PAGE 0
+#define FLD_NO_PageInfoTbl_START 1
+#define FLD_NO_PageInfoTbl_END 2
+
+#define FLD_NO_IDIOM_Idiom 0
+#define FLD_NO_IDIOM_Meaning 3
+#define FLD_NO_IDIOM_Desc 4
+#define FLD_NO_IDIOM_Know 6
+
+#define FLD_NO_BOOK_LIST_ID 0
+#define FLD_NO_BOOK_LIST_FileName 4
+#define FLD_NO_BOOK_LIST_Name 5
+#define FLD_NO_BOOK_LIST_Author 6
+#define FLD_NO_BOOK_LIST_BookLength 9    //책의 길이를 저장한 필드 FldName_BOOK_SETTING_BookLength
+#define FLD_NO_BOOK_LIST_LastPage 13 
+#define FLD_NO_BOOK_LIST_WORD_COUNT_ALL 14
+#define FLD_NO_BOOK_LIST_WORD_COUNT_UNIQUE 15
+#define FLD_NO_BOOK_LIST_WORD_COUNT_UNKNOWN 16
+#define FLD_NO_BOOK_LIST_WORD_COUNT_NOTSURE 17
+#define FLD_NO_BOOK_LIST_WORD_COUNT_KNOWN 18
+#define FLD_NO_BOOK_LIST_WORD_COUNT_EXCLUDE 19    //사전에 없는 단어를 저장한 필드 FldName_BOOK_SETTING_WORD_COUNT_EXCLUDE
+
+
+//아래는 myDic.sqlite에 있는 tblEngDic테이블에서만 사용한다.(restore시만 사용함)
+#define FLD_NO_tblEngDic_WORD 1
+#define FLD_NO_tblEngDic_COUNT 3
+#define FLD_NO_tblEngDic_KNOW 4
+#define FLD_NO_tblEngDic_MEANING 5
+#define FLD_NO_tblEngDic_Desc 9
+#define FLD_NO_tblEngDic_RANK 13    //이것은 각 책의 TOMEMORIZE와 같은거다.
+#define FLD_NO_tblEngDic_LEVEL 14
+#define FLD_NO_tblEngDic_WORDORI 16
+#define FLD_NO_tblEngDic_Pronounce 17
+#define FLD_NO_tblEngDic_KnowPronounce 18
+
+
+//MyEnglish.sqlite에 있는 Eng_Dic테이블
+#define FLD_NO_ENG_DIC_WORD 0
+#define FLD_NO_ENG_DIC_WORDORI 1
+#define FLD_NO_ENG_DIC_MEANING 2
+#define FLD_NO_ENG_DIC_Desc 3
+#define FLD_NO_ENG_DIC_COUNT 4
+#define FLD_NO_ENG_DIC_KNOW 5
+#define FLD_NO_ENG_DIC_TOMEMORIZE 6
+#define FLD_NO_ENG_DIC_FAVORITE 7
+#define FLD_NO_ENG_DIC_WORDLEVEL1 8
+#define FLD_NO_ENG_DIC_INSTALLEDWORD 17
+
+#define FLD_NO_ENG_DIC_Pronounce 25
+#define FLD_NO_ENG_DIC_KnowPronounce 27
+#define FLD_NO_ENG_DIC_CATEGORY_1 28
+#define FLD_NO_ENG_DIC_CATEGORY_2 29
+#define FLD_NO_ENG_DIC_CATEGORY_3 30
+#define FLD_NO_ENG_DIC_CATEGORY_4 31
+#define FLD_NO_ENG_DIC_CATEGORY_5 32
+#define FLD_NO_ENG_DIC_CATEGORY_6 33
+#define FLD_NO_ENG_DIC_CATEGORY_7 34
+#define FLD_NO_ENG_DIC_CATEGORY_8 35
+#define FLD_NO_ENG_DIC_CATEGORY_9 36
+
+#define FLD_NO_ENG_DIC_RESERV1_INT 37           ////HD.KIM 2013 May 3 : length of word in the "WORD" field. CHINESE 모드에서는 단어의 문자수르 나타낸다.
+#define FLD_NO_ENG_DIC_RESERV1_CHAR 40          //CHINESE 모드에서는 단어의 첫번째 단어를 표시한다.(빨리 찾을려구...)
+#define FLD_NO_ENG_DIC_RESERV2_CHAR 41          //CHINESE 모드에서는 한자 단어에 대한 한글발음이 들어있다.
+
+//#define FLD_NO_ENG_DIC_CATEGORY_10 29
+//#define FLD_NO_ENG_DIC_CATEGORY_11 30
+//#define FLD_NO_ENG_DIC_CATEGORY_12 31
+//#define FLD_NO_ENG_DIC_CATEGORY_13 32
+//#define FLD_NO_ENG_DIC_CATEGORY_14 33
+//#define FLD_NO_ENG_DIC_CATEGORY_15 34
+//#define FLD_NO_ENG_DIC_CATEGORY_16 35
+//#define FLD_NO_ENG_DIC_CATEGORY_17 36
+//#define FLD_NO_ENG_DIC_CATEGORY_18 37
+//#define FLD_NO_ENG_DIC_CATEGORY_19 38
+//#define FLD_NO_ENG_DIC_CATEGORY_20 39
+//#define FLD_NO_ENG_DIC_CATEGORY_21 40
+//#define FLD_NO_ENG_DIC_CATEGORY_22 41
+//#define FLD_NO_ENG_DIC_CATEGORY_23 42
+//#define FLD_NO_ENG_DIC_CATEGORY_24 43
+//#define FLD_NO_ENG_DIC_CATEGORY_25 44
+//#define FLD_NO_ENG_DIC_CATEGORY_26 45
+//#define FLD_NO_ENG_DIC_CATEGORY_27 46
+//#define FLD_NO_ENG_DIC_CATEGORY_28 47
+//#define FLD_NO_ENG_DIC_CATEGORY_29 48
+//#define FLD_NO_ENG_DIC_CATEGORY_30 49
+#define FLD_NO_ENG_DIC_WORDORDER 68
+
+#define FLD_NO_TBL_EngDic_dicByCategory_FIELDNAME 0
+#define FLD_NO_TBL_EngDic_dicByCategory_CATEGORYNAME 1
+#define FLD_NO_TBL_EngDic_dicByCategory_USE 2
+
+
+//각책의 sqlite에 있는 engDic테이블과 MyEnglish.sqlite에 있는 booktemp의 테이블 스키마는 똑같다.
+#define FLD_NO_TBL_EngDicEachBook_WORD 0
+#define FLD_NO_TBL_EngDicEachBook_WORDORI 1
+#define FLD_NO_TBL_EngDicEachBook_MEANING 2
+#define FLD_NO_TBL_EngDicEachBook_COUNT 4
+#define FLD_NO_TBL_EngDicEachBook_KNOW 5
+#define FLD_NO_TBL_EngDicEachBook_TOMEMORIZE 6
+#define FLD_NO_TBL_EngDicEachBook_WORDLEVEL1 8
+#define FLD_NO_TBL_EngDicEachBook_INSTALLEDWORD 17
+#define FLD_NO_TBL_EngDicEachBook_WORDORDER 46
+
+
+#define FLD_NO_TBL_Idiom_Idiom 0
+#define FLD_NO_TBL_Idiom_WORDORI 2
+
+#define FLD_NO_dicByCategory_FIELD 0
+#define FLD_NO_dicByCategory_CategoryName 1
+#define FLD_NO_dicByCategory_USE 2
+
+#define FLD_VAL_TBL_EngDic_LEVEL_999 999
+#define FLD_VAL_TBL_EngDic_LEVEL_1 1
+#define FLD_VAL_TBL_EngDic_LEVEL_17 17
+
+#define intCountOfWordsForQuiz 20
+
+
+#define viewTypeBook 1
+#define viewTypeWeb 2
+#define viewTypeText 3
+#define PlayTypeMovie 4
+
+#define MovieSelectorSourceModeBook 1
+#define MovieSelectorSourceModeMovie 2
+
+#define OPEN_DIC_DB 1
+#define OPEN_DIC_DB_BOOK 2
+#define OPEN_DIC_DB_BUNDLE 3
+
+
+#define segBookSort_Alphabet 0
+#define segBookSort_Difficult 1
+#define segBookSort_Size 2
+
+
+#define fileNameWithExt_MyChinese @"MyChinese.sqlite"
+#define fileNameWithExt_MyEnglish_BOOK @"MyEnglish_BOOK.sqlite"
+#define fileNameWithExt_MyEnglish @"MyEnglish.sqlite"
+#define fileNameWithExt_myDic @"myDic.sqlite"
+#define fileNameWithExt_EncryptionXML @"encryption.xml"
+
+#define StrVer_1_0 @"VER1.0"
+#define StrVer_1_1 @"VER1.1"
+#define StrVer_1_2 @"VER1.2"
+#define StrVer_1_3 @"VER1.3"
+
+#define StrVer_Book_1_0 @"1.0"
+#define StrVer_Book_1_1 @"1.1"
+//#define StrVer_Book_1_2 @"1.2"
+
+
+#define When_WordHasNoMeaning_GetOriMeaning 1
+#define When_WordHasNoMeaning_DoNotGetOriMeaning 2
+
+
+//User Level관련
+#define Cnt_GetUserTest 10
+#define Cnt_TestLevel 50
+#define Did_UserLevelTest 1
+#define UserLevelTest @"UserLevelTest"
+
+
+
+//라이트버전에서 허용하는 책의 수(실제책은 2를 빼야한다. FreeBooks폴더와 HowToRead)
+#define LimitCntOfBooks_in_Lite 5
+
+#define IOSVersion_5_0 5.0f
+#define IOSVersion_5_1 5.1f
+#define IOSVersion_6_0 6.0f
+    
+
+#define Defs_Value_WasUnderMyEnglish_1_2 1
+#define Defs_Value_WasOverMyEnglish_1_2 2
+#define Defs_Key_WasNotMyEnglish_1_2 @"WasNotMyEnglish_1_2"
+
+#define intDoWordGroup 1
+#define intDoLevelTest 2
+
+
+
+#define fileExtension_EPUB @"EPUB"
+#define fileExtension_TXT @"TXT"
+#define fileExtension_SMI @"SMI"
+#define fileExtension_MP4 @"MP4"
+
+
+#define intTwitterType_Tweets 1
+#define intTwitterType_UserInfo 2
+
+#define intTwitterPeopleType_Followers 1
+#define intTwitterPeopleType_Friends 2
+
+
+#define intExamType_MeaningAndWord 0
+#define intExamType_WordAndMeaning 1
+#define intExamType_BlankInSentence 2
+
+#define intPickerViewTypeInBook_NextPages 1
+#define intPickerViewTypeInBook_ExamPages 2
+#define intPickerViewTypeInBook_TTSPages 3
+
+
+#define intTypeSetWordsAndMeaning_Unknonw_Word 1
+#define intTypeSetWordsAndMeaning_Word_Meaning 2
+#define intTypeSetDefaultUpdateDic_AddPhrasalVerb 51
+#define intTypeSetDefaultUpdateDic_AddPronounce 52
+
+#define intMaxNoOfExam_ALL   6
+
+#define KEY_DIC_Desc @"Desc"
+#define KEY_DIC_DescChanged @"DescChanged"
+
+#define KEY_DIC_FirstWord @"FirstWord"
+#define KEY_DIC_FontSize @"FontSize"
+#define KEY_DIC_Idiom @"Idiom"
+#define KEY_DIC_InstalledWord @"InstalledWord"
+#define KEY_DIC_KNOW @"Know"
+#define KEY_DIC_KnowChanged @"KnowChanged"
+#define KEY_DIC_KnowPronounce @"KnowPronounce"
+#define KEY_DIC_KnowPronounceChanged @"KnowPronounceChanged"
+
+#define KEY_DIC_HanjaKoreanMeaning @"RESERV2_CHAR"                  //중국어App에서 한글일때만 한자의 뜻을 표시한다.
+#define KEY_DIC_HanjaOnly @"HanjaOnly"
+#define KEY_DIC_MEANING @"Meaning"
+#define KEY_DIC_MeaningChanged @"MeaningChanged"
+#define KEY_DIC_Pronounce @"Pronounce"
+#define KEY_DIC_PronounceChanged @"PronounceChanged"
+#define KEY_DIC_ShowMeaning @"ShowMeaning"
+#define KEY_DIC_StrOverOneWordInText @"StrOverOneWordInText"
+#define KEY_DIC_StrOverOneWordOri @"StrOverOneWordOri"
+#define KEY_DIC_StrOverOneWord @"StrOverOneWord"
+#define KEY_DIC_WORD @"Word"
+#define KEY_DIC_WORDORI @"WordOri"
+#define KEY_DIC_WordLength @"WordLength"
+//#define KEY_DIC_HanjaMeaning @"
+
+#define SMI_LANG_ENCC @"ENCC"
+#define SMI_LANG_KRCC @"KRCC"
+
+#define SMI_DIC_KEY_TIME @"TIME"
+#define SMI_DIC_KEY_LANGUAGE @"LANGUAGE"
+#define SMI_DIC_KEY_SCRIPT @"SCRIPT"
+
+
+//SMI 자막을 보여줄때 아는단어 숨기기
+#define SMI_HIDE_WORD_ALL 0
+#define SMI_HIDE_WORD_NONE 1
+#define SMI_HIDE_WORD_KNOWN 2
+
+
+
+//BookView에서 테이블의 종류
+#define INT_TABLEVIEW_MODE_EPUB_CONTENTS 0
+#define INT_TABLEVIEW_MODE_SEARCH 1
+
+
+//iOS6일때 컨트롤의 위치를 옮겨주는것
+#define MOVE_PIXEL_IOS6_40 70
+
+
+
+
+#define Main_Background_English @"main_background.jpg"
+#define Main_Background_EnglishHD @"main_background_1024.jpg"
+#define Main_Background_English_iPhone5 @"main_background_english_1136.jpg"
+#define Main_Background_Chinese @"main_background_chinese.jpg"
+#define Main_Background_ChineseHD @"main_background_1024.jpg"
+#define Main_Background_Chinese_iPhone5 @"main_background_chinese_1136.jpg"
+
+
+//화면에 보이는 폰트 싸이즈
+#define Font_Size_MAX 180
+#define Font_Size_NORMAL 140
+#define Font_Size_MIN 100
+
+
+
+
+
+#define ActionSheet_Tag_OpenSNS 10
+
+
+
+#define LABEL_FONT_SIZE 14.0f
+#define LABEL_FONT_SIZE_18 18.0f
+#define PROVERB_FONT_SIZE 20.0f
+#define PROVERB_MEANING_FONT_SIZE 16.0f
+#define CELL_CONTENT_WIDTH 200.0f
+#define CELL_CONTENT_MAX_HEIGHT 600.0f
+#define CELL_CONTENT_MARGIN 5.0f
+#define CELL_CONTENT_MIN_HEIGHT 44.0f
+
+
+
+//CSS　관련
+#define CSS_VERSION_1_0 1.0f
+#define CSS_Option_Day 1
+#define CSS_Option_Day_Imsi 2
+#define CSS_Option_Night 3
+#define CSS_Option_Night_Imsi 4
+
+#define KEY_CSS_VERSION @"CSS_Version"
+#define KEY_CSS_BODY @"CSS_BODY"
+#define KEY_CSS_WORDNotRated @"CSS_WORDNotRated"
+#define KEY_CSS_WORDUnknown @"CSS_WORDUnknown"
+#define KEY_CSS_WORDNotSure @"CSS_WORDNotSure"
+#define KEY_CSS_WORDNotRatedIdiom @"CSS_WORDNotRatedIdiom"
+#define KEY_CSS_WORDUnknownIdiom @"CSS_WORDUnknownIdiom"
+#define KEY_CSS_WORDNotSureIdiom @"CSS_WORDNotSureIdiom"
+
+
+
+
+//Flurry관련
+#define Flurry_MENU_FullDictionary      @"MENU_FullDictionary"
+#define Flurry_MENU_OpenBookList        @"MENU_OpenBookList"
+#define Flurry_MENU_OpenWeb             @"MENU_OpenWeb"
+#define Flurry_MENU_OpenMyLevel         @"MENU_OpenMyLevel"
+#define Flurry_MENU_OpenMovieList       @"MENU_OpenMovieList"
+#define Flurry_MENU_SendMailVolunteers  @"MENU_SendMailVolunteers"
+
+
+
+//defs에 관련
+#define Defs_SHOW_PhrasalVerb @"SHOW_PhrasalVarb"
+#define Defs_QUIZ_ENABLE @"QUIZ_ENABLE"
+#define Defs_QUIZ_VIBRATION @"QUIZ_VIBRATION"
+
+

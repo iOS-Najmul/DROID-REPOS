@@ -1,0 +1,7 @@
+font.WORDNotRated{color : rgb(0,0,0); border-width: thin; border-bottom-style : solid; border-color : rgb(0,0,0);   }
+font.WORDUnknown{color : rgb(0,0,0);  font-weight : bold;  }
+font.WORDNotSure{color : rgb(0,0,255);  font-weight : bold;  }
+font.WORDNotRatedIdiom{border-width: thick; border-style : inset; border-color : rgb(0,255,0);   }
+font.WORDNotUnknownIdiom{border-width: thick; border-style : double; border-color : rgb(255,255,0);   }
+font.WORDNotSureIdiom{border-width: thick; border-style : solid; border-color : rgb(0,255,255);   }
+

@@ -1,0 +1,39 @@
+1. No Modo Livro
+
+ 1) Obter alguns ficheiros de leitura
+    :Suporta ficheiros ".txt"
+    ※ Se não tiver livros, pode utilizar sites de eBooks tal como "www.gutenberg.org" .
+    :Transfira-os com o programa iTunes File Sharing.
+    :Pode criar um ficheiro através de "Crie um livro" no Modo Internet.
+
+ 2) Seleccione um ficheiro de leitura da lista dos livros a ler.
+
+ 3) "Analyze" o ficheiro no menu "Prepare".
+
+ 4) Definir palavras como conhecidas ou desconhecidas "Words in this book" no menu "Dic&Into".
+    Dica) Pode configurar palavras rapidamente com o menu "Configuração Rápida".
+    "NR" Não Classificado
+    "X" Palavras desconhecidas
+    "?" não tenho a certeza
+    "!" palavras conhecidas
+    "-" palavras úteis.  nome próprio…
+
+ 5) Digite o significado da palavra desconhecida utilizando a Internet.
+
+ 6) Mude para modo de estudo pressionando "study" no menu do canto superior direito.
+
+ 7) Apenas leia!!!
+    : Pode ligar ou desligar a opção de ver  o significado de palavras desconhecidas enquanto lê!
+    : Se quiser saber o significado de uma palavra, passe o rato sobre a mesma.
+
+2. Em Modo Internet
+
+ 1) Vá para o site que quer ler.
+    : Digite o nome do site ou use os "Favorites" no menu.
+
+ 2) Se desejar, pode criar um livro enquanto lê.
+   (1) Copie o texto que desejar para torná-lo num livro.
+   (2) Utilize "Make a book" no Menu "Book".
+   (3) Digite o nome do livro e pressione o botão "OK".
+
+   DICA) Se é novo a esta aplicação ou se não tiver nenhuma lista de palavras conhecidas, recomendamos que utilize a "Word Group" no "My Level". Confira cada lista de palavras e se achar que conhece a maioria das palavras da lista configure-as para palavras conhecidas.

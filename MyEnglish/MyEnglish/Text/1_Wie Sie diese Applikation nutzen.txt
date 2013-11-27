@@ -1,0 +1,39 @@
+1. In einem Buch-Modus
+
+ 1) Holen Sie sich einige Dateien zum lesen
+    :Es unterstützt "txt" Dateien.
+    ※ Wen Sie keine Bücher haben, können Sie einige E-Books im "www.gutenberg.org" holen.
+    : Übertragen Sie es mit iTunes
+    : Sie können einige Dateien mit "Make a book" im Web-Modus erschaffen.
+
+ 2) Wählen Sie ein Buch aus der Liste zum lesen
+
+ 3) "Analyze" Sie die Datei im "Prepare" Menü.
+
+ 4) Stellen Sie Wörter um bekannte oder unbekannte Wörter im "Wörterbuch" mit der hilfe von dem "Dic & Info" Menü.
+    Tipp) Sie können Wörter schnell einstellen mit dem "Schnell-Einstellung" Menü.
+    "NR" : Nicht Bewertet
+    "X" : unbekannte wörter
+    "?" : nicht sicher
+    "!" : bekannte wörter
+    "-": nützliche Wörter. Eigenname ...
+
+ 5) Unbekanntes Wort mit Web-Wörterbuch einschreiben.
+
+ 6) Ändern Sie den Lern-Modus durch dem "study" Menü oben rechts.
+
+ 7) Nur Lesen!
+    : Sie können die Bedeutung der unbekannten Wörter beim Lesen ein-oder ausschalten!
+    : Wenn Sie die Bedeutung eines Wortes wissen wollen, drücken Sie es an.
+
+2. Auf Web-Modus
+
+ 1) Gehen Sie auf die Website die Sie lesen möchten.
+    : Geben Sie den Namen der Website ein oder verwenden Sie "Favorites" aus dem Menü
+
+ 2) Während des Lesens können Sie ein Buch aufstellen.
+   (1) Kopieren Sie den gewünschten Text um ein Buch zu machen.
+   (2) Verwenden Sie "Make a book" aus dem "Book" Menü.
+   (3) Schreiben Sie den Buch Namen ein und drücken Sie "OK".
+
+   TIPP) Wenn Sie neu bei dieser Applikation sind oder keine bekannte Wörter Liste haben, empfehle ich Ihnen die "Word Group" in "My Level" zu verwenden. Überprüfen Sie jedes Wort in der Wörter-Liste, und setzen sie es zu den bakannte Wörter ein, wenn Sie denken Sie wissen die Wörter.

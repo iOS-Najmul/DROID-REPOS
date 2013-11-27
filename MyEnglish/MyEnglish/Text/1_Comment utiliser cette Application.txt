@@ -1,0 +1,39 @@
+1. En mode "livre"
+
+ 1) Trouvez des fichiers de lecture
+    : lit les formats "txt".
+    ※ Vous pouvez utiliser des sites tels que "www.gutenberg.org" si vous ne possédez pas de livres.
+    : Transférez les avec la fonction de partage de fichiers Itunes.
+    : Vous pouvez créer un fichier avec la fonction "Make a book" en ligne.
+
+ 2) Sélectionnez un livre de la liste de lecture
+
+ 3) "Analyze" le fichier dans le menu "Prepare".
+
+ 4) Désignez les mots comme connus ou inconnus sous "Words in this book" du menu "Dic&Info".
+    Astuce) Vous pouvez désigner rapidement des mots dans le menu "Quick setting".
+    "NR": non évalué
+    "X": mots inconnus
+    "?": pas sûr
+    "!": mots connus
+    "-": mots utiles. noms propres…
+
+ 5) Saisissez le sens du mot inconnu en utilisant le dictionnaire en ligne.
+
+ 6) Basculez en mode apprentissage en appuyant sur "study" à droite en haut du menu.
+
+ 7): Lisez tout simplement!!!
+    : vous pouvez activer et désactiver le sens des mots inconnus durant la lecture!
+    : Si vous désirez connaitre le sens d'un mot, passez votre curseur dessus.
+
+2: En mode Internet
+
+ 1) Allez sur le site que vous désirez lire.
+    : Tapez le nom du site ou utilisez "Favorites" dans le menu
+
+ 2) Vous pouvez produire un livre pendant votre lecture si vous le souhaitez, 
+   (1) Copiez le texte que vous désirez transformer en livre.
+   (2) Utilisez "Make a book" dans le menu "Book".
+   (3) Saisissez le nom du livre et appuyez sur "OK".
+
+   Astuce) Si vous utilisez cette application pour la première fois ou si vous n'avez pas de liste de mots connus, je vous recommande d'utiliser la "Word Group" du menu "My Level". Vérifiez chaque mot de chaque liste, et si vous pensez en connaitre la plupart, indiquez-les comme mots connus.
