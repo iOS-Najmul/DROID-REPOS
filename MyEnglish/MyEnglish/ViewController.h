@@ -13,6 +13,7 @@
 #import "OptionsViewController.h"
 #import <iAd/iAd.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "STTwitter.h"
 
 @class User;
 @interface ViewController : UIViewController<MFMailComposeViewControllerDelegate, GADBannerViewDelegate, OptionsViewControllerDelegate, UISplitViewControllerDelegate,FBLoginViewDelegate>
@@ -44,6 +45,8 @@
 @property (nonatomic, strong) UILabel                     *lblUpdateMsg;
 @property (nonatomic, strong) NSMutableData               *dataiTunesRSS;
 @property (nonatomic, strong) IBOutlet UIButton           *btnExportWordList;
+
+@property (nonatomic, strong) STTwitterAPI *twitter;
 
 - (IBAction) callOpenFacebook:(id)sender;
 - (IBAction) callOpenTwitter:(id)sender;

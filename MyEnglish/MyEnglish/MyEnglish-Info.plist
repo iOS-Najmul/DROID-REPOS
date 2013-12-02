@@ -52,6 +52,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb236345139854268</string>
+				<string>krykoapp</string>
 			</array>
 		</dict>
 	</array>

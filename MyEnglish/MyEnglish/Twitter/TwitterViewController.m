@@ -7,6 +7,7 @@
 //
 
 #import "TwitterViewController.h"
+#include "ViewController.h"
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 #import "myCommon.h"
@@ -14,8 +15,8 @@
 #import "UIImageView+AsyncAndCache.h"
 #import "TweetsViewController.h"
 #import "TWProfileViewController.h"
+#import "TWLoginViewController.h"
 #import "SVProgressHUD.h"
-
 
 static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple.com/us/app/myenglish/id527050097?mt=8";
 
@@ -23,18 +24,10 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
 
     NSURL *handleUrl;
 }
+
 @end
 
 @implementation TwitterViewController
-
-
-@synthesize intBeforeTabBarItemTag;
-@synthesize tabBarOne, tabBarItemTweet, tabBarItemFriend, tabBarItemAboutMe;
-@synthesize tblTweets, arrTweets, dicUserImage;
-@synthesize dicStudyFriends, dicFollowers, dicFollowing;
-@synthesize _accountStore, twitterMainAccount;
-@synthesize intTwitterType, intTwitterPeopleType;
-@synthesize dicUserIDs, arrFollowers;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,17 +49,6 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
     UIBarButtonItem *btnFind = [[UIBarButtonItem alloc] initWithTitle:@"Find" style:UIBarButtonItemStyleBordered target:self action:@selector(searchOnPost:)];
     UIBarButtonItem *btnNew = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStyleBordered target:self action:@selector(newPost:)];
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:btnNew,btnFind, nil]];
-    
-    
-    intBeforeTabBarItemTag = -1;
-
-    dicUserImage = [[NSMutableDictionary alloc] init];
-    dicStudyFriends = [[NSMutableDictionary alloc] init];
-    dicFollowers = [[NSMutableDictionary alloc] init];
-    dicFollowing = [[NSMutableDictionary alloc] init];
-    _accountStore = [[ACAccountStore alloc] init];
-    [self getMainAccount];
-    [self fetchData];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -75,11 +57,33 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    UIBarButtonItem *btnBookMark = [[UIBarButtonItem alloc] initWithTitle:@"      Favorite      " style:UIBarButtonItemStyleDone target:self action:@selector(showFavoriteOnly:)];
-    UIBarButtonItem *btnMe = [[UIBarButtonItem alloc] initWithTitle:@"            Me            " style:UIBarButtonItemStyleDone target:self action:@selector(showMe:)];
-    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    [self setToolbarItems:[NSArray arrayWithObjects:flexibleSpace, btnBookMark,btnMe,flexibleSpace, nil]];
+    if (!_isOwnStream){
+    
+        UIBarButtonItem *btnBookMark = [[UIBarButtonItem alloc] initWithTitle:@"      Favorite      " style:UIBarButtonItemStyleDone target:self action:@selector(showFavoriteOnly:)];
+        UIBarButtonItem *btnMe = [[UIBarButtonItem alloc] initWithTitle:@"            Me            " style:UIBarButtonItemStyleDone target:self action:@selector(showMe:)];
+        UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        [self.navigationController setToolbarHidden:NO animated:YES];
+        [self setToolbarItems:[NSArray arrayWithObjects:flexibleSpace, btnBookMark,btnMe,flexibleSpace, nil]];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    
+    if (self.twitter) {
+        
+        if (!_isOwnStream){
+        
+            [(ViewController*)self.parentVC setTwitter:self.twitter];
+            [self getTimelineAction];
+        }
+        self.navigationItem.title = [NSString stringWithFormat:@"@%@",self.twitter.userName];
+        
+    }else{
+    
+        [self performSelector:@selector(presentLoginSettings) withObject:nil afterDelay:0.4];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -87,6 +91,22 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
     [super viewWillDisappear:animated];
     
     [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
+- (void)getTimelineAction{
+    
+    [SVProgressHUD showProgress:-1 status:@"Loading" maskType:SVProgressHUDMaskTypeGradient];
+    [_twitter getHomeTimelineSinceID:nil
+                               count:20
+                        successBlock:^(NSArray *statuses) {
+                            
+                            [SVProgressHUD dismiss];
+                            self.arrTweets = statuses;
+                            [self.tblTweets reloadData];
+                            
+                        } errorBlock:^(NSError *error) {
+                            [SVProgressHUD showErrorWithStatus:@"Sorry!\nSome Error occur to get tweets, Please try again"];
+                        }];
 }
 
 -(void) back 
@@ -108,13 +128,13 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    if (intTwitterType == intTwitterType_Tweets) {
-        return [self.arrTweets count] + ([self isEditing]? 1 : 0);
-    } else if (intTwitterType == intTwitterType_UserInfo) {
-        return [self.arrFollowers count] + ([self isEditing]? 1 : 0);
-    }
-    return 0;
+//    // Return the number of rows in the section.
+//    if (intTwitterType == intTwitterType_Tweets) {
+//        return [self.arrTweets count] + ([self isEditing]? 1 : 0);
+//    } else if (intTwitterType == intTwitterType_UserInfo) {
+//        return [self.arrFollowers count] + ([self isEditing]? 1 : 0);
+//    }
+    return [self.arrTweets count];
 }
 
 static NSString *CellIdentifier = @"Cell";
@@ -128,7 +148,7 @@ static NSString *CellIdentifier = @"Cell";
 		cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
-    NSDictionary *dicOne = [arrTweets objectAtIndex:indexPath.row];
+    NSDictionary *dicOne = [self.arrTweets objectAtIndex:indexPath.row];
 
     NSDictionary *dicUser = [dicOne objectForKey:@"user"];
     
@@ -162,7 +182,7 @@ static NSString *CellIdentifier = @"Cell";
     
     TweetsViewController *tweetVC = [[TweetsViewController alloc] initWithNibName:@"TweetsViewController" bundle:nil];
     
-    tweetVC.tweet = [arrTweets objectAtIndex:indexPath.row];
+    tweetVC.tweet = [self.arrTweets objectAtIndex:indexPath.row];
 
     [self.navigationController pushViewController:tweetVC animated:YES];
 }
@@ -171,322 +191,6 @@ static NSString *CellIdentifier = @"Cell";
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     return 100;
-}
-
-#pragma mark -
-#pragma mark Twitters
-- (void) onBtnTwitter
-{
-    Class iOSTwitter = NSClassFromString(@"TWTweetComposeViewController");
-    if (iOSTwitter != nil) {        
-        if ([iOSTwitter canSendTweet]) {
-            ////            [self displayTwitterViewController];
-            TWTweetComposeViewController *twitter = [[TWTweetComposeViewController alloc] init];
-
-            
-            [twitter setInitialText:@"Twitter 테스트"];
-            
-            [self presentModalViewController:twitter animated:YES];
-            //            
-            twitter.completionHandler = ^(TWTweetComposeViewControllerResult result)
-            {
-                if (result == TWTweetComposeViewControllerResultCancelled) {
-                    UIAlertView* alert2 = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"")	message:NSLocalizedString(@"Cancel", @"")  delegate:self cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-                    [alert2 show];
-                }
-                [self dismissModalViewControllerAnimated:YES];
-            };
-        }
-        
-    }
-}
-
-- (void) fetchTimelineWithText:(NSString *)text
-{
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://search.twitter.com/search.json?q=%@", [text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-        
-    DLog(@"text %@", text);
-    DLog(@"urlString %@", urlString);
-    
-    TWRequest *request = [[TWRequest alloc] initWithURL:[NSURL URLWithString:urlString] parameters:nil requestMethod:TWRequestMethodGET];        
-    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error){        
-        if ([urlResponse statusCode] == 200) {
-            
-            NSError *jsonError;
-            
-            NSDictionary *timelineInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
-            
-            self.arrTweets = [timelineInfo objectForKey:@"results"];
-            
-            DLog(@"arrTweets : %@", arrTweets);
-            
-            [self.view bringSubviewToFront:tblTweets];
-            [self.tblTweets reloadData];
-            
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            
-        } else {            
-            DLog(@"Twitter Error : %@", [error localizedDescription]);            
-        }        
-    }];
-}
-- (void) fetchTimelineWithTextWithUserName:(NSString *)text userName:(NSString*)strUserName
-{
-    
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-        if(granted) {
-            // Get the list of Twitter accounts.
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-            DLog(@"accountsArray : %@", accountsArray);
-            
-            // For the sake of brevity, we'll assume there is only one Twitter account present.
-            // You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
-            if ([accountsArray count] > 0) {
-                ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-                
-                NSString *urlString = @"http://api.twitter.com/1/statuses/home_timeline.json";
-//                NSString *urlString = @"http://api.twitter.com/1/statuses/public_timeline.json";    
-                DLog(@"strUserName : %@", strUserName);
-                if ( (strUserName != nil) && ([strUserName isEqualToString:@""] == FALSE) ) {
-                    urlString = [NSString stringWithFormat:@"http://api.twitter.com/1/statuses/user_timeline.json?screen_name=%@&include_entities=true", [strUserName stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-                }
-                
-                DLog(@"text %@", text);
-                DLog(@"urlString %@", urlString);
-                
-                TWRequest *request = [[TWRequest alloc] initWithURL:[NSURL URLWithString:urlString] parameters:nil requestMethod:TWRequestMethodGET];       
-                [request setAccount:twitterAccount];
-                [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error){        
-                    if ([urlResponse statusCode] == 200) {
-                        
-                        NSError *jsonError;
-                        
-            //            NSDictionary *timelineInfo = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
-            //            DLog(@"timelineInfo : %@", timelineInfo);
-                        self.arrTweets = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&jsonError];
-
-                        
-                        DLog(@"arrTweets : %@", arrTweets);
-                        
-            //            [self.view bringSubviewToFront:tblTweets];
-                        [self.tblTweets reloadData];
-                        
-                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                        
-                    } else {            
-                        DLog(@"Twitter Error : %@", [error localizedDescription]);            
-                    }        
-                }];
-            }
-        }
-    }];
-}
-
-- (void)followOnTwitter
-{
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-        if(granted) {
-            // Get the list of Twitter accounts.
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-            DLog(@"accountsArray : %@", accountsArray);
-            
-            // For the sake of brevity, we'll assume there is only one Twitter account present.
-            // You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
-            if ([accountsArray count] > 0) {
-                // Grab the initial Twitter account to tweet from.
-                ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-                DLog(@"twitterAccount : %@", twitterAccount);
-                
-                
-                NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
-                [tempDict setValue:@"dalnimAppTest3" forKey:@"screen_name"];
-                [tempDict setValue:@"false" forKey:@"follow"];
-                
-                
-                TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:@"https://api.twitter.com/1/friendships/create.json"] parameters:tempDict requestMethod:TWRequestMethodPOST];
-                
-                
-                [postRequest setAccount:twitterAccount];
-                
-                [postRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-//                    NSString *output = [NSString stringWithFormat:@"HTTP response status: %i", [urlResponse statusCode]];
-//                    DLog(@"%@", output);
-                    
-                }];
-            }
-        }
-    }];
-}
-
-- (void)fetchData
-{
-    intTwitterType = intTwitterType_Tweets;
-    
-    [SVProgressHUD showProgress:-1 status:@"Loading" maskType:SVProgressHUDMaskTypeGradient];
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    [accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-        if(granted) {
-            // Get the list of Twitter accounts.
-            NSArray *accountsArray = [accountStore accountsWithAccountType:accountType];
-//            DLog(@"accountsArray : %@", accountsArray);
-            
-            // For the sake of brevity, we'll assume there is only one Twitter account present.
-            // You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
-            if ([accountsArray count] > 0) {
-                // Grab the initial Twitter account to tweet from.
-                ACAccount *twitterAccount = [accountsArray objectAtIndex:0];
-//                DLog(@"twitterAccount : %@", twitterAccount);
-                self.navigationItem.title = twitterAccount.accountDescription;
-                TWRequest *postRequest = [[TWRequest alloc]
-                                          initWithURL:
-                                          [NSURL URLWithString:@"https://api.twitter.com/1/statuses/home_timeline.json"]
-                                          parameters:nil
-                                          requestMethod:TWRequestMethodGET];
-                
-                [postRequest setAccount:twitterAccount];
-                [postRequest performRequestWithHandler:^(NSData *responseData,
-                                                         NSHTTPURLResponse *urlResponse,
-                                                         NSError *error) {
-                    if ([urlResponse statusCode] == 200) {
-                        NSError *jsonError = nil;
-                        self.arrTweets = [NSJSONSerialization JSONObjectWithData:responseData
-                                                                        options:0
-                                                                          error:&jsonError];
-//                        DLog(@"arrTweets : %@", arrTweets);
-                        dispatch_sync(dispatch_get_main_queue(), ^{
-                            
-                            [self.tblTweets reloadData];
-                            [SVProgressHUD dismiss];
-                            
-                        });
-                    }
-                }];
-            }
-        }
-    }];
-}
-
-- (void) getMainAccount
-{
-//    ACAccountStore *accountStore = [[ACAccountStore alloc] init];    
-    ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];    
-    [_accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-        if(granted) {
-            // Get the list of Twitter accounts.
-            NSArray *accountsArray = [_accountStore accountsWithAccountType:accountType];
-            DLog(@"accountsArray : %@", accountsArray);
-            
-            // For the sake of brevity, we'll assume there is only one Twitter account present.
-            // You would ideally ask the user which account they want to tweet from, if there is more than one Twitter account present.
-            if ([accountsArray count] > 0) {
-                self.twitterMainAccount = [accountsArray objectAtIndex:0];
-                DLog(@"twitterMainAccount : %@", twitterMainAccount);
-            }
-        }
-    }];
-        
-}
-
-- (void) getFollowers:(NSInteger)intFindPeopleType screenName:(NSString*)strScreenName
-{
-//    DLog(@"twitterMainAccount : %@", twitterMainAccount.userName);
-    intTwitterType = intTwitterType_UserInfo;
-    if (strScreenName == NULL) {
-        strScreenName = [NSString stringWithFormat:@"%@", twitterMainAccount.username];
-    }
-//    NSMutableArray *arrUserIDs = [[NSMutableArray alloc] init]; 
-    NSString *strFindPeople = [NSString stringWithFormat:@"https://api.twitter.com/1/followers/ids.json?cursor=-1&screen_name=%@", strScreenName];
-    if (intFindPeopleType == intTwitterPeopleType_Friends) {
-        strFindPeople = [NSString stringWithFormat:@"https://api.twitter.com/1/friends/ids.json?cursor=-1&screen_name=%@", strScreenName];
-    }
-    TWRequest *postRequest = [[TWRequest alloc]
-                              initWithURL:
-                              [NSURL URLWithString:strFindPeople]
-                              parameters:nil
-                              requestMethod:TWRequestMethodGET];
-    
-    [postRequest setAccount:twitterMainAccount];
-    [postRequest performRequestWithHandler:^(NSData *responseData,
-                                             NSHTTPURLResponse *urlResponse,
-                                             NSError *error) {
-        if ([urlResponse statusCode] == 200) {
-            NSError *jsonError = nil;
-            self.dicUserIDs = [NSJSONSerialization JSONObjectWithData:responseData
-                                                             options:0
-                                                               error:&jsonError];
-            DLog(@"dicUserIDs : %@", dicUserIDs);
-            
-            
-//        https://api.twitter.com/1/users/lookup.json?screen_name=twitterapi,twitter&include_entities=true 
-            
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                NSArray *arrOne = [dicUserIDs objectForKey:@"ids"];
-                if ([arrOne count] > 0) {
-                    NSMutableString *strUserIDS = [NSMutableString stringWithString:@""];
-                    
-                    DLog(@"arrOne : %@", arrOne);
-                    for (NSInteger i = 0; i < [arrOne count]; i++) {
-//                        DLog(@"i : %d", i);
-//                        DLog(@"[arrOne objectAtIndex:%d] : %@", i, [arrOne objectAtIndex:i]);
-                        if ( (i == ([arrOne count] - 1) ) || (i == 99) ) {
-                            [strUserIDS appendString:[NSString stringWithFormat:@"%@", [arrOne objectAtIndex:i]]];
-                            break;
-                        } else {
-                            [strUserIDS appendString:[NSString stringWithFormat:@"%@,",[arrOne objectAtIndex:i]]];                
-                        }
-                    }
-                    
-                    DLog(@"strUserIDS : %@", strUserIDS);
-                    
-                    TWRequest *postRequest1 = [[TWRequest alloc]
-                                               initWithURL:
-                                               [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1/users/lookup.json?user_id=%@&include_entities=true", strUserIDS]]
-                                               parameters:nil
-                                               requestMethod:TWRequestMethodGET];
-                    
-                    [postRequest1 setAccount:twitterMainAccount];
-                    [postRequest1 performRequestWithHandler:^(NSData *responseData,
-                                                              NSHTTPURLResponse *urlResponse,
-                                                              NSError *error) {
-                        if ([urlResponse statusCode] == 200) {
-                            NSError *jsonError = nil;
-                            self.arrFollowers = [NSJSONSerialization JSONObjectWithData:responseData
-                                                                                options:0
-                                                                                  error:&jsonError];
-                            DLog(@"arrFollowers : %@", arrFollowers);
-                            
-                            
-                            //         
-                            
-                            dispatch_sync(dispatch_get_main_queue(), ^{
-                                [self.tblTweets reloadData];
-                            });
-                        }
-                    }];
-                }
-                
-//                [self.tblTweets reloadData];
-            });
-        }
-    }];
-    
-    
-
-    
 }
 
 - (void)newPost:(id)sender{
@@ -562,10 +266,21 @@ static NSString *CellIdentifier = @"Cell";
 	return YES;
 }
 
+- (void)showFavoriteOnly:(id)sender{
+
+    [self.twitter getFavoritesListWithSuccessBlock:^(NSArray *statuses) {
+        self.arrTweets = statuses;
+        [self.tblTweets reloadData];
+    } errorBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Plaese try again later"];
+    }];
+}
+
 - (void)showMe:(id)sender{
         
     TWProfileViewController *profileVC = [[TWProfileViewController alloc] initWithNibName:@"TWProfileViewController" bundle:nil];
     
+    profileVC.twitter = self.twitter;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:profileVC];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
@@ -573,6 +288,13 @@ static NSString *CellIdentifier = @"Cell";
 -(void)searchOnPost:(id)sender{
     
     
+}
+
+-(void)presentLoginSettings{
+
+    TWLoginViewController *twLoginVC = [[TWLoginViewController alloc] initWithNibName:@"TWLoginViewController" bundle:nil];
+    twLoginVC.parrentVC = self;
+    [self.navigationController pushViewController:twLoginVC animated:YES];
 }
 
 #pragma mark -

@@ -983,6 +983,8 @@
 {
     [SVProgressHUD dismiss];
     TwitterViewController *twitterView = [[TwitterViewController alloc] initWithNibName:@"TwitterViewController" bundle:nil];
+    twitterView.parentVC = self;
+    twitterView.twitter = self.twitter;
 	[self.navigationController pushViewController:twitterView animated:YES];
 }
 

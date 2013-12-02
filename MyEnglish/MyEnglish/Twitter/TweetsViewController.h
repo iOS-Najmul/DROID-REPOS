@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
+#import "STTwitterAPI.h"
 
 @interface TweetsViewController : UITableViewController<UIWebViewDelegate, UIActionSheetDelegate,MFMailComposeViewControllerDelegate,
 MFMessageComposeViewControllerDelegate>
+
+@property (nonatomic, strong) STTwitterAPI *twitter;
 
 @property (nonatomic, retain) NSDictionary *tweet;
 @property(nonatomic, retain) NSMutableArray *bookmarkPosts;

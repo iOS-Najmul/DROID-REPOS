@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STTwitterAPI.h"
 
 @interface TWProfileViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate,UIScrollViewDelegate>
 
-@property(nonatomic, retain) NSMutableDictionary *mDict;
-@property (nonatomic, retain) NSDictionary *tweet;
+@property (nonatomic, strong) STTwitterAPI *twitter;
+@property (nonatomic, retain) NSDictionary *tweets;
+
+- (IBAction)showStatus:(id)sender;
+- (IBAction)showFollowings:(id)sender;
+- (IBAction)showFollowers:(id)sender;
 
 @end

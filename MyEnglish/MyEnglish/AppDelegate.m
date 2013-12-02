@@ -14,6 +14,7 @@
 #import "FlurryAdDelegate.h"
 #import "ExamViewController.h"
 #import "OptionsViewController.h"
+#import "TWLoginViewController.h"
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 
 @implementation AppDelegate
@@ -66,12 +67,33 @@
     return YES;
 }
 
+- (NSDictionary *)parametersDictionaryFromQueryString:(NSString *)queryString {
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    
+    NSArray *queryComponents = [queryString componentsSeparatedByString:@"&"];
+    
+    for(NSString *s in queryComponents) {
+        NSArray *pair = [s componentsSeparatedByString:@"="];
+        if([pair count] != 2) continue;
+        
+        NSString *key = pair[0];
+        NSString *value = pair[1];
+        
+        md[key] = value;
+    }
+    
+    return md;
+}
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     
-    if ([url.absoluteString hasPrefix:@"fb236345139854268"]) {
+    NSLog(@"[url scheme]:%@",[url scheme]);
+    
+    if ([[url scheme] isEqualToString:@"fb236345139854268"]) {
         
         // Facebook SDK * login flow *
         // Attempt to handle URLs to complete any auth (e.g., SSO) flow.
@@ -89,6 +111,18 @@
             }
         }];
     }
+    
+    if ([[url scheme] isEqualToString:@"krykoapp"]){
+       
+        NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
+        
+        NSString *token = d[@"oauth_token"];
+        NSString *verifier = d[@"oauth_verifier"];
+        
+        TWLoginViewController *vc = (TWLoginViewController *)[self.navigationController topViewController];
+        [vc setOAuthToken:token oauthVerifier:verifier];
+    }
+    
     return YES;
 }
 

@@ -4,13 +4,13 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_4_0
-#warning "This project uses features only available in iOS SDK 4.0 and later."
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
 #ifdef __OBJC__
-    #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #endif
 
 
@@ -22,9 +22,6 @@
 #else  
 #define DLog(...)  
 #endif
-
-#define TWITTER_CONSUMER_KEY        c4x3s1beFj7c8cmT3FHeqw
-#define TWITTER_CONSUMER_SECRET     TNcvd28PMafwcLloCGqsGIXYQSfHpICSQd3PcP5U8
 
 
 #define widthiPad 768

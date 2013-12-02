@@ -7,6 +7,7 @@
 //
 
 #import "TWProfileViewController.h"
+#import "TwitterViewController.h"
 #import "UIImageView+Cached.h"
 #import "UIImageView+AsyncAndCache.h"
 #import "AppDelegate.h"
@@ -25,12 +26,14 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
     IBOutlet UILabel* lblFullName;
     
     IBOutlet UIImageView *profilePic;
-    IBOutlet UIButton *tweet;
-    IBOutlet UIButton *following;
-    IBOutlet UIButton *followers;
+    IBOutlet UIButton *btnTweet;
+    IBOutlet UIButton *btnFollowing;
+    IBOutlet UIButton *btFfollowers;
     
     UILabel *footerLabel;
     UIActivityIndicatorView *activityIndicator;
+    
+    NSArray *followingFollowerList;
 }
 
 @end
@@ -59,33 +62,49 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Log out", @"") style:UIBarButtonItemStylePlain target:self action:@selector(logoutMe:)];
     
     [self setupTableViewFooter];
-    
-    _mDict = [[NSMutableDictionary alloc] init];
+    [self getUserInformation];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    [self setUpTableViewHeader];
 }
 
--(void)setUpTableViewHeader{
+-(void)getUserInformation{
+    
+    [self.twitter getUserInformationFor:self.twitter.userName successBlock:^(NSDictionary *user) {
+        NSLog(@"user:%@",user);
+        [self setUpTableViewHeaderWithUser:user];
+    } errorBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Plaese try again later"];
+    }];
+}
 
-    NSDictionary *dicUser = [self.tweet objectForKey:@"user"];
+-(void)setUpTableViewHeaderWithUser:(NSDictionary*)user{
     
-    lblFullName.text = [dicUser objectForKey:@"name"];
-    lblUserName.text = [NSString stringWithFormat:@"@%@",[dicUser objectForKey:@"screen_name"]];
+    lblFullName.text = [user objectForKey:@"name"];
+    lblUserName.text = [NSString stringWithFormat:@"@%@",[user objectForKey:@"screen_name"]];
     
-    NSURL *url = [NSURL URLWithString:(NSString *)[dicUser objectForKey:@"profile_image_url"]];
+    NSURL *url = [NSURL URLWithString:(NSString *)[user objectForKey:@"profile_image_url"]];
     [profilePic setImageURL:url];
     
     NSDate *date;
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     [df setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
-    date = [df dateFromString:[self.tweet objectForKey:@"created_at"]];
-    [df setDateFormat:@"eee MMM dd\nhh:mm a"];
+    date = [df dateFromString:[user objectForKey:@"created_at"]];
+    [df setDateFormat:@"eee MMM dd\nhh:mm a-yy"];
     NSString *dateStr = [df stringFromDate:date];
     lblTime.text = dateStr;
+    
+    NSString *tweetTitle = [NSString stringWithFormat:@"%@\nTweets",[user objectForKey:@"statuses_count"]];
+    [btnTweet setTitle:tweetTitle forState:UIControlStateNormal];
+    
+    NSString *followingTitle = [NSString stringWithFormat:@"%@\nFollowing",[user objectForKey:@"friends_count"]];
+    [btnFollowing setTitle:followingTitle forState:UIControlStateNormal];
+    
+    NSString *followersTitle = [NSString stringWithFormat:@"%@\nFollowers",[user objectForKey:@"followers_count"]];
+    [btFfollowers setTitle:followersTitle forState:UIControlStateNormal];
+    
     self.tableView.tableHeaderView = headerView;
 }
 
@@ -131,7 +150,7 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return [followingFollowerList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -145,7 +164,13 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 	}
     
-    cell.textLabel.text = @"name";
+    NSDictionary *eachFollower = followingFollowerList[indexPath.row];
+    cell.textLabel.text = eachFollower[@"name"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"@%@",eachFollower[@"screen_name"]];
+    
+    NSURL *url = [NSURL URLWithString:(NSString *)[eachFollower objectForKey:@"profile_image_url"]];
+    UIImageView *imgView = (UIImageView*)cell.imageView;
+    [imgView setImageURL:url];
     
     return cell;
 }
@@ -175,9 +200,46 @@ static NSString *const iTellAFriendiOSAppStoreURLFormat = @"https://itunes.apple
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)showFriends:(id)sender {
+- (IBAction)showStatus:(id)sender {
     
+    [self.twitter _getStatusesMentionsTimelineWithCount:@"50"
+                                    contributorsDetails:[NSNumber numberWithInteger:0]
+                                        includeEntities:[NSNumber numberWithInteger:1]
+                                       includeMyRetweet:[NSNumber numberWithInteger:1]
+                                           successBlock:^(NSArray *statuses) {
+                                               TwitterViewController *twVC = [[TwitterViewController alloc] initWithNibName:@"TwitterViewController" bundle:nil];
+                                               twVC.isOwnStream = YES;
+                                               twVC.twitter = self.twitter;
+                                               twVC.arrTweets = statuses;
+                                               [self.navigationController pushViewController:twVC animated:YES];
+                                           } errorBlock:^(NSError *error) {
+                                               [SVProgressHUD showErrorWithStatus:@"Plaese try again later"];
+                                           }];
+    
+}
 
+- (IBAction)showFollowings:(id)sender {
+    
+    followingFollowerList = nil;
+    [self.twitter getFriendsForScreenName:self.twitter.userName successBlock:^(NSArray *friends) {
+        followingFollowerList = friends;
+        [self.tableView reloadData];
+    } errorBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Plaese try again later"];
+    }];
+}
+
+- (IBAction)showFollowers:(id)sender {
+    
+    followingFollowerList = nil;
+    [self.twitter getFollowersForScreenName:self.twitter.userName successBlock:^(NSArray *followers) {
+       
+        followingFollowerList = followers;
+        [self.tableView reloadData];
+        
+    } errorBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Plaese try again later"];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
