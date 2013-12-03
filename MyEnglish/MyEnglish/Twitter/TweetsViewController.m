@@ -291,8 +291,22 @@
 - (IBAction)favoriteTweet:(id)sender{
     
     UIButton *btn = (UIButton*)sender;
-    btn.selected = !btn.isSelected;
     
+    NSLog(@"Status ID:%@",[self.tweet objectForKey:@"id"]);
+    btn.selected = !btn.isSelected;
+    [self.twitter postFavoriteState:YES forStatusID:[self.tweet objectForKey:@"id"] successBlock:^(NSDictionary *status) {
+        
+        NSLog(@"status:%@",status);
+    } errorBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"Error occured, please try again later"];
+    }];
+    
+//    [self.twitter postFavoriteCreateWithStatusID:[self.tweet objectForKey:@"id"] includeEntities:[NSNumber numberWithBool:YES] successBlock:^(NSDictionary *status) {
+//        
+//        NSLog(@"status:%@",status);
+//    } errorBlock:^(NSError *error) {
+//        [SVProgressHUD showErrorWithStatus:@"Error occured, please try again later"];
+//    }];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex

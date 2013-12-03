@@ -181,7 +181,7 @@ static NSString *CellIdentifier = @"Cell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     TweetsViewController *tweetVC = [[TweetsViewController alloc] initWithNibName:@"TweetsViewController" bundle:nil];
-    
+    tweetVC.twitter = self.twitter;
     tweetVC.tweet = [self.arrTweets objectAtIndex:indexPath.row];
 
     [self.navigationController pushViewController:tweetVC animated:YES];

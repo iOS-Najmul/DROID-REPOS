@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TweetsViewController">
@@ -56,6 +56,9 @@
                     <state key="selected" title="Liked">
                         <color key="titleColor" red="1" green="0.36261730720000002" blue="0.0066291974050000004" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="replyTweet:" destination="-1" eventType="touchUpInside" id="fdb-Mg-V6s"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="v2V-Vt-QJO">
                     <rect key="frame" x="159" y="97" width="55" height="28"/>
@@ -64,6 +67,9 @@
                     <state key="normal" title="SNS">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="snsTweet:" destination="-1" eventType="touchUpInside" id="Pgq-nI-NPn"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="E9C-c1-jo5">
                     <rect key="frame" x="220" y="97" width="90" height="28"/>
@@ -72,9 +78,12 @@
                     <state key="normal" title="Favorite">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="selected" title="Bookmarked">
+                    <state key="selected" title="Favorite">
                         <color key="titleColor" red="1" green="0.36261730720000002" blue="0.0066291974050000004" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="favoriteTweet:" destination="-1" eventType="touchUpInside" id="DRb-ig-Cuv"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mUK-kg-DF0">
                     <rect key="frame" x="68" y="97" width="85" height="28"/>
@@ -83,6 +92,9 @@
                     <state key="normal" title="Retweet">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="reTweet:" destination="-1" eventType="touchUpInside" id="Tc7-wv-hCV"/>
+                    </connections>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="@username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zfe-ah-Quw">
                     <rect key="frame" x="66" y="37" width="149" height="15"/>

@@ -19,4 +19,9 @@ MFMessageComposeViewControllerDelegate>
 @property(nonatomic, retain) NSMutableArray *bookmarkPosts;
 @property(nonatomic) BOOL isOwnStream;
 
+- (IBAction)replyTweet:(id)sender;
+- (IBAction)reTweet:(id)sender;
+- (IBAction)snsTweet:(id)sender;
+- (IBAction)favoriteTweet:(id)sender;
+
 @end
